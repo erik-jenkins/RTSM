@@ -1,5 +1,7 @@
 package com.retweet.rtsm.app;
 
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
@@ -42,7 +44,23 @@ public class SearchController {
     @FXML
     private void handleSearchButtonClick() {
         try {
-            System.out.println(XenoCantoService.makeRequest(this.search.getText()));
+            XenoCantoService.makeRequest(this.search.getText())
+                    .asStringAsync(new Callback<String>() {
+                        @Override
+                        public void completed(HttpResponse<String> httpResponse) {
+                            System.out.println(httpResponse.getBody());
+                        }
+
+                        @Override
+                        public void failed(UnirestException e) {
+
+                        }
+
+                        @Override
+                        public void cancelled() {
+
+                        }
+                    });
         } catch (UnirestException e) {
             e.printStackTrace();
         }

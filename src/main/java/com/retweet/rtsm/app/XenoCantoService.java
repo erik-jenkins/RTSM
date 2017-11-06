@@ -4,14 +4,16 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.request.GetRequest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.concurrent.Future;
 
 public class XenoCantoService {
     private static String baseUrl = "http://www.xeno-canto.org/api/2/recordings?query=";
 
-    public static String makeRequest(String queryString) throws UnirestException {
+    public static GetRequest makeRequest(String queryString) throws UnirestException {
         String urlEncoded = "";
 
         try {
@@ -20,9 +22,8 @@ public class XenoCantoService {
             e.printStackTrace();
         }
 
-        HttpResponse<String> response = Unirest.get(baseUrl + urlEncoded)
-                .asString();
+        GetRequest getRequest = Unirest.get(baseUrl + urlEncoded);
 
-        return response.getBody();
+        return getRequest;
     }
 }
