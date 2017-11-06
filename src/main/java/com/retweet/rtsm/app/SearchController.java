@@ -1,5 +1,6 @@
 package com.retweet.rtsm.app;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
@@ -38,7 +39,11 @@ public class SearchController {
 
     @FXML
     private void handleSearchButtonClick() {
-        System.out.println(this.search.getText());
+        try {
+            System.out.println(XenoCantoService.makeRequest(this.search.getText()));
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
