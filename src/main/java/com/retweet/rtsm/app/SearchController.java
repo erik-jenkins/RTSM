@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 public class SearchController {
@@ -47,8 +49,10 @@ public class SearchController {
     }
 
     @FXML
-    private void handleKeyPress() {
-        this.handleSearchButtonClick();
+    private void handleKeyPress(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            this.handleSearchButtonClick();
+        }
     }
 
     @FXML
