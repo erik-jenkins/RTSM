@@ -4,7 +4,9 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.async.Callback;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
@@ -12,19 +14,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class SearchController {
     @FXML
     private TitledPane advSearchPane;
 
     @FXML
-    private ChoiceBox qualityExactly, qualityGreaterThan, qualityLessThan;
-
-    @FXML
     private Label searchLabel;
 
     @FXML
-    private TextField search, genus, recordist, country, loc, remarks, box, lat, lon, also,
-            type, catNumber, area, year;
+    private TextField search;
 
     private Stage stage;
 
@@ -35,9 +35,24 @@ public class SearchController {
     }
 
     private void setupListeners() {
-        this.advSearchPane.heightProperty().addListener((obs, oldHeight, newHeight) -> {
-            this.stage.sizeToScene();
-        });
+        this.advSearchPane.heightProperty().addListener((obs, oldHeight, newHeight) -> this.stage.sizeToScene());
+    }
+
+    private void openResultsWindow() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/results.fxml"));
+            Parent root = loader.load();
+
+            Scene scene = new Scene(root);
+
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setTitle("reTweet Song Manager");
+            stage.setResizable(false);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -55,6 +70,7 @@ public class SearchController {
                         public void completed(HttpResponse<String> httpResponse) {
                             searchLabel.setVisible(false);
                             System.out.println(httpResponse.getBody());
+                            openResultsWindow();
                         }
 
                         @Override

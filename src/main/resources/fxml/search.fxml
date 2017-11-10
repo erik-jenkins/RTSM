@@ -85,7 +85,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button mnemonicParsing="false" text="Search" GridPane.columnIndex="3" />
+                  <Button mnemonicParsing="false" onAction="#handleSearchButtonClick" text="Search" GridPane.columnIndex="3" />
                   <Button mnemonicParsing="false" onAction="#closeWindow" text="Close" GridPane.columnIndex="2" />
                   <Label fx:id="searchLabel" text="Searching..." visible="false" />
                </children>
